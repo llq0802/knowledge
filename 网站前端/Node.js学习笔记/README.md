@@ -20,6 +20,7 @@
     1. [Tips](#tips)
 1. [工具使用](#工具使用)
 
+    1. [Egg.js](#eggjs)
     1. [Koa](#koa)
     1. [express](#express)
     1. [pm2](#pm2)
@@ -1228,6 +1229,106 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 
 ---
 ## 工具使用
+
+### [Egg.js](https://github.com/eggjs/egg)
+1. 特性
+
+    1. 「约定优于配置」
+
+        统一的约定（文件结构、插件引用方式、扩展逻辑）。
+    2. 插件
+
+        1. 一个插件只做一件事
+        2. 一个插件可以包含
+
+            1. `extend`：扩展基础对象的上下文，提供各种工具类、属性。
+            2. `middleware`：增加一个或多个中间件，提供请求的前置、后置处理逻辑。
+            3. `config`：配置各个环境下插件自身的默认配置项。
+    3. 基于Koa
+
+        Koa：middleware（中间件）、context（上下文、ctx，egg继承koa的ctx属性）、async-await
+2. 扩展
+
+    `./app/extend/「application或context或request或response或helper」.js`
+3. `Router`
+
+    参数：`app`
+3. `Controller`
+
+    实例：`this`。
+
+>`this`属性：
+>
+>1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
+>
+>    继承koa的ctx
+>2. `.app`（`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.config`、`.controller`、`.httpclient`、`.loggers`、`.middlewares`、`.router`、`.serviceClasses`）
+>3. `.config`
+>4. `.service`
+
+3. `Service`
+3. `Middleware`
+3. 配置文件`config`
+
+    1. `config.default.js`
+
+        任何情况都使用，与其他配置文件合并使用。
+    2. `config.local.js`
+
+        开发模式。
+    3. `unittest`
+
+        测试模式。
+
+    供插件使用、安全配置、等，一般不直接给业务代码引用（`app.config.属性`引用）。
+4. 静态资源
+
+    `./app/public`
+5. 渲染模板
+1. 本地开发[egg-bin](https://github.com/eggjs/egg-bin)
+1. [目录机构](https://www.eggjs.org/zh-CN/basics/structure)
+
+    ```text
+    egg-project
+    ├── package.json
+    ├── app.js (可选)                    # 自定义启动时的初始化工作，可选
+    ├── agent.js (可选)                  # 自定义启动时的初始化工作（agent），可选
+    ├── app
+    |   ├── router.js                   # 配置 URL 路由规则
+    │   ├── controller                  # 解析用户的输入，处理后返回相应的结果
+    │   |   └── home.js
+    │   ├── service (可选)               # 编写业务逻辑层，可选，建议使用
+    │   |   └── user.js
+    │   ├── middleware (可选)            # 编写中间件，可选
+    │   |   └── response_time.js
+    │   ├── schedule (可选)              # 定时任务，可选
+    │   |   └── my_task.js
+    │   ├── public (可选)                # 放置静态资源，可选
+    │   |   └── reset.css
+    │   ├── view (可选)                  # 放置模板文件，可选，由模板插件约定
+    │   |   └── home.tpl
+    │   ├── model (可选)                 # 放置领域模型，可选，由领域类相关插件约定
+    │   |   └── home.js
+    │   └── extend (可选)                # 框架的扩展，可选
+    │       ├── helper.js (可选)
+    │       ├── request.js (可选)
+    │       ├── response.js (可选)
+    │       ├── context.js (可选)
+    │       ├── application.js (可选)
+    │       └── agent.js (可选)
+    ├── config
+    |   ├── plugin.js                   # 配置需要加载的插件
+    |   ├── config.default.js           # 编写配置文件 config/config.{env}.js
+    │   ├── config.prod.js
+    |   ├── config.test.js (可选)
+    |   ├── config.local.js (可选)
+    |   └── config.unittest.js (可选)
+    └── test                            # 单元测试
+        ├── middleware
+        |   └── response_time.test.js
+        └── controller
+            └── home.test.js
+    ```
 
 ### [Koa](https://github.com/koajs/koa)
 关键点：级联（洋葱模型） + 通过上下文（ctx）在中间件间传递数据 + ctx.body的值为HTTP响应数据。
