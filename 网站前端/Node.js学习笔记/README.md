@@ -1269,7 +1269,11 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 2. 扩展`./app/extend/` +
 
     1. `application.js`
+
+        扩展app。
     1. `context.js`
+
+        扩展ctx。
     1. `request.js`
     1. `response.js`
     1. `helper.js`
@@ -1286,7 +1290,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 >
 >1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
 >
->    继承koa的ctx
+>    继承koa的ctx，请求级别 的对象，每次请求生成一个ctx实例。
 >2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`）
 >3. `.config`
 >4. `.service`
@@ -1303,6 +1307,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     // config文件中配置传入
     module.exports = (options) => {
       return async function (ctx, next) {
+        // this === ctx
         // await next()
       }
     }
@@ -1324,7 +1329,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     实例：`this`。
 1. 定时任务`./app/schedule/`
 
-    参数：`ctx`
+    导出对象方式，参数：`ctx`；导出class方式，实例：`this`。
 4. 静态资源`./app/public/`
 5. 渲染模板
 1. [目录机构](https://www.eggjs.org/zh-CN/basics/structure)
