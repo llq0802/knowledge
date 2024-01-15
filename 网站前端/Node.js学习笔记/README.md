@@ -1247,7 +1247,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     3. 基于Koa
 
         Koa：middleware（中间件）、context（上下文、ctx）、async-await
-3. 配置文件`./config`
+3. 配置文件`./config/`
 
     1. `config.default.js`
 
@@ -1260,7 +1260,10 @@ Node.js的全局对象`global`是所有全局变量的宿主。
         测试模式。
     4. `config.prod.js`
 
-        正式
+        正式。
+    - `plugin.js`
+
+        插件配置。可以包含：Service、中间件、配置、扩展；不包含：~~Router~~、~~Controller~~。它没有~~plugin.js~~，只能声明跟其他插件的依赖，而不能决定其他插件的开启与否。
 
     供插件使用、安全配置、等，一般不直接给业务代码引用（`app.config.属性`引用）。
 2. 扩展`./app/extend/` +
