@@ -1231,7 +1231,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 ## 工具使用
 
 ### [Egg.js](https://github.com/eggjs/egg)
-1. 特性
+- 特性
 
     1. 「约定优于配置」
 
@@ -1246,29 +1246,8 @@ Node.js的全局对象`global`是所有全局变量的宿主。
             3. `config`：配置各个环境下插件自身的默认配置项。
     3. 基于Koa
 
-        Koa：middleware（中间件）、context（上下文、ctx，egg继承koa的ctx属性）、async-await
-2. 扩展
-
-    `./app/extend/「application或context或request或response或helper」.js`
-3. `Router`
-
-    参数：`app`
-3. `Controller`
-
-    实例：`this`。
-
->`this`属性：
->
->1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
->
->    继承koa的ctx
->2. `.app`（`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.config`、`.controller`、`.httpclient`、`.loggers`、`.middlewares`、`.router`、`.serviceClasses`）
->3. `.config`
->4. `.service`
-
-3. `Service`
-3. `Middleware`
-3. 配置文件`config`
+        Koa：middleware（中间件）、context（上下文、ctx）、async-await
+3. 配置文件`./config`
 
     1. `config.default.js`
 
@@ -1276,16 +1255,75 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     2. `config.local.js`
 
         开发模式。
-    3. `unittest`
+    3. `config.unittest.js`
 
         测试模式。
+    4. `config.prod.js`
+
+        正式
 
     供插件使用、安全配置、等，一般不直接给业务代码引用（`app.config.属性`引用）。
-4. 静态资源
+2. 扩展`./app/extend/` +
 
-    `./app/public`
+    1. `application.js`
+    1. `context.js`
+    1. `request.js`
+    1. `response.js`
+    1. `helper.js`
+1. 启动初始化`./app.js`、`./agent.js`
+
+    参数：`app`或`agent`
+
+    1. 事件：`server`、`error`、`request`、`response`
+3. 路由`./app/router.js`
+
+    参数：`app`
+
+>`this`属性：
+>
+>1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
+>
+>    继承koa的ctx
+>2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`）
+>3. `.config`
+>4. `.service`
+
+3. 控制器`./app/controller/`
+
+    实例：`this`。
+3. 服务`./app/service/`
+
+    实例：`this`。
+3. 中间件`./app/middleware/`
+
+    ```js
+    // config文件中配置传入
+    module.exports = (options) => {
+      return async function (ctx, next) {
+        // await next()
+      }
+    }
+    ```
+
+    1. 开启中间件：在config文件加入配置
+
+        ```
+        exports.middleware = ['中间件文件名', ];
+
+        exports.中间件文件名 = {  // 传入对应中间件的options
+          参数
+        };
+        ```
+1. 通用函数`ctx.helper`
+
+    自定义helper方法：`app/extend/helper.js`
+
+    实例：`this`。
+1. 定时任务`./app/schedule/`
+
+    参数：`ctx`
+4. 静态资源`./app/public/`
 5. 渲染模板
-1. 本地开发[egg-bin](https://github.com/eggjs/egg-bin)
 1. [目录机构](https://www.eggjs.org/zh-CN/basics/structure)
 
     ```text
@@ -1329,6 +1367,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
         └── controller
             └── home.test.js
     ```
+- 本地开发[egg-bin](https://github.com/eggjs/egg-bin)
 
 ### [Koa](https://github.com/koajs/koa)
 关键点：级联（洋葱模型） + 通过上下文（ctx）在中间件间传递数据 + ctx.body的值为HTTP响应数据。
