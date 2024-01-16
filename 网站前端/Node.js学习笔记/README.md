@@ -1271,12 +1271,28 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     1. `application.js`
 
         扩展app。
+
+        >app对象指的是 Koa 的全局应用对象，全局只有一个，在应用启动时被创建。
     1. `context.js`
 
         扩展ctx。
+
+        >Context 指的是 Koa 的请求上下文，这是 请求级别 的对象，每次请求生成一个 Context 实例，简写成ctx。
     1. `request.js`
+
+        扩展request。
+
+        >Request 对象和 Koa 的 Request 对象相同，是 请求级别 的对象，它提供了大量请求相关的属性和方法供使用。
     1. `response.js`
+
+        扩展response。
+
+        >Response 对象和 Koa 的 Response 对象相同，是 请求级别 的对象，它提供了大量响应相关的属性和方法供使用。
     1. `helper.js`
+
+        扩展`ctx.helper`。
+
+    - 能够根据环境选择指定扩展文件进行合并：`扩展名.环境.js`。e.g. `./app/extend/application.unittest.js`。
 1. 启动初始化`./app.js`、`./agent.js`
 
     参数：`app`或`agent`
@@ -1291,13 +1307,13 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 >1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
 >
 >    继承koa的ctx，请求级别 的对象，每次请求生成一个ctx实例。
->2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`）
+>2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`、等）
 >3. `.config`
 >4. `.service`
 
 3. 控制器`./app/controller/`
 
-    实例：`this`。
+    导出对象方式，参数：`ctx`；导出class方式，实例：`this`。
 3. 服务`./app/service/`
 
     实例：`this`。
