@@ -1298,6 +1298,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     参数：`app`或`agent`
 
     1. 事件：`server`、`error`、`request`、`response`
+    2. class原型链方法，定义生命周期
 3. 路由`./app/router.js`
 
     参数：`app`
