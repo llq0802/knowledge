@@ -1305,10 +1305,10 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 
 >`this`属性：
 >
->1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`、等）
+>1. `.ctx`（`.request`、`.response`、`.app`、`.originalUrl`、`.req`、`.res`、`.socket`）
 >
 >    继承koa的ctx，请求级别 的对象，每次请求生成一个ctx实例。
->2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`、等）
+>2. `.app`（`.config`、`.controller`、`.loggers`、`.middlewares`、`.router`、`.env`、`.name`、`.baseDir`、`.subdomainOffset`、`.httpclient`、`.serviceClasses`）
 >3. `.config`
 >4. `.service`
 
