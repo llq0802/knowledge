@@ -1247,7 +1247,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     3. 基于Koa
 
         Koa：middleware（中间件）、context（上下文、ctx）、async-await
-3. 配置文件`./config/`
+1. 配置文件`./config/`
 
     1. `config.default.js`
 
@@ -1261,7 +1261,7 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     4. `config.prod.js`
 
         正式。
-    - `plugin.js`
+    - 插件`plugin.js`
 
         插件配置。可以包含：Service、中间件、配置、扩展；不包含：~~Router~~、~~Controller~~。它没有~~plugin.js~~，只能声明跟其他插件的依赖，而不能决定其他插件的开启与否。
 
@@ -1293,13 +1293,13 @@ Node.js的全局对象`global`是所有全局变量的宿主。
         扩展`ctx.helper`。
 
     - 能够根据环境选择指定扩展文件进行合并：`扩展名.环境.js`。e.g. `./app/extend/application.unittest.js`。
-1. 启动初始化`./app.js`、`./agent.js`
+3. 启动初始化`./app.js`、`./agent.js`
 
     参数：`app`或`agent`
 
     1. 事件：`server`、`error`、`request`、`response`
     2. class原型链方法，定义生命周期
-3. 路由`./app/router.js`
+4. 路由`./app/router.js`
 
     参数：`app`
 
@@ -1312,13 +1312,13 @@ Node.js的全局对象`global`是所有全局变量的宿主。
 >3. `.config`
 >4. `.service`
 
-3. 控制器`./app/controller/`
+5. 控制器`./app/controller/`
 
     导出对象方式，参数：`ctx`；导出class方式，实例：`this`。
-3. 服务`./app/service/`
+6. 服务`./app/service/`
 
     实例：`this`。
-3. 中间件`./app/middleware/`
+7. 中间件`./app/middleware/`
 
     ```js
     // config文件中配置传入
@@ -1330,26 +1330,28 @@ Node.js的全局对象`global`是所有全局变量的宿主。
     }
     ```
 
-    1. 开启中间件：在config文件加入配置
+    1. 全局
 
-        ```
-        exports.middleware = ['中间件文件名', ];
+        1. 开启中间件：在config文件加入配置
 
-        exports.中间件文件名 = {  // 传入对应中间件的options
-          参数
-        };
-        ```
-1. 通用函数`ctx.helper`
+            ```js
+            exports.middleware = ['中间件文件名', ];
 
-    自定义helper方法：`app/extend/helper.js`
+            exports.中间件文件名 = {  // 传入对应中间件的options
+              参数
+            };
+            ```
+        2. 在框架和插件中使用中间件
+    2. 局部（单路由生效）
+8. 通用函数`ctx.helper`
 
     实例：`this`。
-1. 定时任务`./app/schedule/`
+9. 定时任务`./app/schedule/`
 
     导出对象方式，参数：`ctx`；导出class方式，实例：`this`。
-4. 静态资源`./app/public/`
-5. 渲染模板
-1. [目录机构](https://www.eggjs.org/zh-CN/basics/structure)
+10. 静态资源`./app/public/`
+
+- [目录结构](https://www.eggjs.org/zh-CN/basics/structure)
 
     ```text
     egg-project
@@ -1392,7 +1394,8 @@ Node.js的全局对象`global`是所有全局变量的宿主。
         └── controller
             └── home.test.js
     ```
-- 本地开发[egg-bin](https://github.com/eggjs/egg-bin)
+
+- 本地开发[egg-bin](https://github.com/eggjs/egg-bin)；生产运行[egg-scripts](https://github.com/eggjs/egg-scripts)。
 
 ### [Koa](https://github.com/koajs/koa)
 关键点：级联（洋葱模型） + 通过上下文（ctx）在中间件间传递数据 + ctx.body的值为HTTP响应数据。
