@@ -2589,6 +2589,27 @@ Vue.use(MyPlugin, { /* 向MyPlugin传入的参数 */ })
 
     1. 组件最大限度复用：路由切换时，若两个路由都渲染同个组件，则不会销毁重建，而是直接复用，因此被复用的组件的生命周期钩子不会再被调用。
     2. 匹配优先级：有时候，同一个路径可以匹配多个路由，此时，匹配的优先级就按照路由的定义顺序：谁先定义的，谁的优先级就最高。
+    3. 若`path`设置为绝对路径，则会忽略之前嵌套路径的`path`
+
+        ```js
+        {
+          path: '/layout',
+          name: 'layout',
+          component: Layout,
+          children: [
+            {
+              path: '/welcome1',            // 解析路径为：/welcome1
+              name: 'Welcome',
+              component: () => import(/* webpackChunkName: "default/welcome" */ '@/default/views/welcome/index'),
+             },
+            {
+              path: 'welcome2',            // 解析路径为：/layout/welcome1
+              name: 'Welcome',
+              component: () => import(/* webpackChunkName: "default/welcome" */ '@/default/views/welcome/index'),
+             },
+          ]
+        }
+        ```
 
 ### 用[pinia](https://github.com/vuejs/pinia)代替~~vuex~~
 
