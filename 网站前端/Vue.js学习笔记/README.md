@@ -2603,7 +2603,7 @@ Vue.use(MyPlugin, { /* 向MyPlugin传入的参数 */ })
               component: () => import(/* webpackChunkName: "default/welcome" */ '@/default/views/welcome/index'),
              },
             {
-              path: 'welcome2',            // 解析路径为：/layout/welcome1
+              path: 'welcome2',            // 解析路径为：/layout/welcome2
               name: 'Welcome',
               component: () => import(/* webpackChunkName: "default/welcome" */ '@/default/views/welcome/index'),
              },
