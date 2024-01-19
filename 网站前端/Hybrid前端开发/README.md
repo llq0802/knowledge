@@ -88,14 +88,14 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
 ### WebView的前端处理
 1. 与Native通信方式：
 
-    >1. 都是以**字符串**（数据用JSON字符串）的形式交互，向客户端传递：
+    >1. `桥协议`（JSI没有这个限制）都是以**字符串**（数据用JSON字符串）的形式交互，向客户端传递：
     >
     >    1. 全局的方法名 -> 客户端调用`window.方法名(JSON数据)`
     >    2. 匿名函数 -> 客户端调用`(匿名函数(JSON数据))`
     >2. WebView无法判断是否安装了其他App。
     >3. 可以通过`查看注入的全局方法`、或`客户端调用回调函数`（、或`navigator.userAgent`）来判定页面是否在具体App内打开。
     >4. `桥协议`仅在App内部起作用；`自定义URL Scheme`是系统层面，所以可以额外针对跨App起作用（如：分享去其他App）；iOS的**通用链接**可以认为是高级的`自定义URL Scheme`。
-    >5. Native和WebView交互需要时间，对时效性很高的操作会有问题。
+    >5. `桥协议`、`自定义URL Scheme`方式的Native和WebView交互需要时间，对时效性很高的操作会有问题；JSI认为是同步的。
 
     1. `桥协议`：Native注入全局方法至WebView的`window`，WebView调用则客户端拦截后触发Native行为。
 
