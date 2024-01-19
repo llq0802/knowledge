@@ -14,7 +14,7 @@
 >随着技术的发展，有新的技术替代`桥协议`，如：JSI、等。
 >
 >1. `桥协议`：JS和C++互相无感知，只能通过桥协议作为中间层，**异步进行序列化/反序列化传输通讯**。
->2. [JSI](https://reactnative.cn/docs/next/the-new-architecture/why#旧架构的问题)：将C++中的常用类型、定义的对象和函数 映射到JS中，支持JS随时调用C++中方法，有更高的性能、更低的通信开销（不需要再~~异步进行序列化/反序列化传输通讯~~，可以同步直接调用方法、传输多类型数据）。并且支持其他JS引擎。
+>2. [JSI](https://reactnative.cn/docs/next/the-new-architecture/why#旧架构的问题)：将C++中的常用类型、定义的对象和函数 映射到JS中，支持JS随时调用C++中方法，有更高的性能、更低的通信开销（不需要再~~异步进行序列化/反序列化传输通讯~~，可以同步直接调用方法、传输多种类型数据）。并且支持其他JS引擎。
 >
 >约定：本篇内容中描述桥协议的部分，都可以用这些新技术替代（广义的桥协议：JS和原生代码之间互相传递数据、调用方法的技术）。
 
@@ -25,7 +25,7 @@
 >
 >1. iOS：
 >
->    官方：[WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)、[UIWebView](https://developer.apple.com/documentation/uikit/uiwebview)（不推荐）
+>    官方：[WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)、~~[UIWebView](https://developer.apple.com/documentation/uikit/uiwebview)~~
 >2. Android：
 >
 >    1. 官方：[WebView](https://developer.android.com/reference/android/webkit/WebView)
