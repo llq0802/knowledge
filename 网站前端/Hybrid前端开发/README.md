@@ -102,7 +102,7 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
         >1. 客户端注入方式：javascript伪协议方式`javascript: 代码`。
         >2. 注入JS代码可以在创建WebView之前（`[native code]`）或之后（全局变量JS注入）。
         >- 若注入的方法为`undefined`，则认为不在此App内部。
-    2. `自定义URL Scheme`：拦截跳转（`<iframe>`或`<img>`设置`src`、点击`<a>`、`window.location.href`），触发Native行为。
+    2. `自定义URL Scheme`：拦截跳转（`<iframe>`或`<img>`设置`src`、点击`<a href>`、调用`window.location.href =`），触发Native行为。
 
         ><details>
         ><summary><code>URL Scheme</code></summary>
