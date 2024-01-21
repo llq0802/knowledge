@@ -119,7 +119,7 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
 
         1. <details>
 
-            <summary>JS实现</summary>
+            <summary>JS触发</summary>
 
             1. iOS8-
 
