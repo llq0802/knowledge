@@ -117,7 +117,9 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
         >5. 快速触发多次`自定义URL Scheme`，有时仅有最后一个产生效果。e.g. 用`window.location.href`快速触发多次，仅有最后一次跳转信息能够传递给客户端。
         >6. 想要实现这样的功能："关闭当前WebView，然后执行某功能"，若用`window.location.href`等触发`自定义URL Scheme`方式给客户端拦截，则可能WebView实例关闭后，事件无法被客户端捕获（类似：异步的`XMLHttpRequest`会随WebView实例关闭而被忽略）。可以尝试换用`桥协议`。
 
-        1. iOS
+        1. <details>
+
+            <summary>JS实现</summary>
 
             1. iOS8-
 
@@ -151,20 +153,22 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
                 >需要HTTPS域名配置、iOS设置等其他端配合。
 
                 >参考：[通用链接（Universal Links）的使用详解](http://www.hangge.com/blog/cache/detail_1554.html)、[Universal Link 前端部署采坑记](http://awhisper.github.io/2017/09/02/universallink/)、[Support Universal Links](https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW2)。
-        2. Android
+            4. Android
 
-            ```js
-            location.href = '自定义URL Scheme';    // 也可以用`<iframe>`
+                ```js
+                location.href = '自定义URL Scheme';    // 也可以用`<iframe>`
 
-            var start = Date.now();
-            setTimeout(function () {    // 尝试通过上面的唤起方式唤起本地客户端，若唤起超时（还在这个页面），则直接跳转到下载页（或做其他未安装App的事情）（浏览器非激活时，定时器执行时间会变慢/主线程被占用，所以会大于定时器时间之后才执行定时器内回调）
-              if (Date.now() - start < 3100) {  // 还在这个页面，认为没有安装App
-                location.href = '下载地址';
-              }
-            }, 3000);
-            ```
+                var start = Date.now();
+                setTimeout(function () {    // 尝试通过上面的唤起方式唤起本地客户端，若唤起超时（还在这个页面），则直接跳转到下载页（或做其他未安装App的事情）（浏览器非激活时，定时器执行时间会变慢/主线程被占用，所以会大于定时器时间之后才执行定时器内回调）
+                  if (Date.now() - start < 3100) {  // 还在这个页面，认为没有安装App
+                    location.href = '下载地址';
+                  }
+                }, 3000);
+                ```
+            </details>
+        2. <details>
 
-        - 在WebView中通过应用宝页面**下载/打开**其他APP
+            <summary>在WebView中通过应用宝页面<strong>下载/打开</strong>其他APP</summary>
 
             >参考：[关于微信中直接调起 Native App 的调研报告](https://blog.csdn.net/lixuepeng_001/article/details/78043418)。
 
@@ -190,15 +194,7 @@ Hybrid底层依赖Native提供的容器（WebView），上层使用HTML、CSS、
                         >若有一些特殊字符，则可以用`encodeURIComponent`转义属性名和属性值。
 
                 e.g. `https://a.app.qq.com/o/simple.jsp?pkgname=com.xx.xxx&ckey=xxxx&android_schema=xxxx://xx`
-
-        >1. 微信分享在部分系统（低于微信客户端Android6.2）使用~~pushState~~导致签名失败，可查询[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115)；又因为一般是异步加载、配置微信的设置，所以要等待微信第三方文件和接口完成后才能够配置成功（才能够设置成功）。
-        >2. Android的微信、QQ等X5内核可以用 ~~<http://debugx5.qq.com/>~~（已失效）打开调试，支持「清除缓存」等操作。
-        >
-        >    iOS可以在 设置->通用->存储空间 清理缓存。
-        >3. 长按没有 ~~`src`~~ 的`<img>`：
-        >
-        >    1. 在iOS微信WebView，截屏这个`<img>`所在位置；
-        >    2. 其他情况，可能导致保存图片错误、或不能进行保存。
+            </details>
     3. WebView提供给Native调用的全局回调函数（或匿名函数）。
 
         ><details>
