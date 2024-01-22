@@ -914,7 +914,6 @@
     若在实例化时存在`el`，则实例将立即进入编译过程，否则，需要显式调用`vm.$mount()`手动开启编译。
 
     >若`render`和`template`都不存在，挂载DOM元素的HTML会被提取出来用作模板，此时，必须使用 Runtime + Compiler 构建的 Vue 库。
-
 7. `template`（字符串）：组件的字符串模板
 
     >限制：只在[完整版](https://v2.cn.vuejs.org/v2/guide/installation.html#对不同构建版本的解释)时可用（需要编译器；运行时的runtime版本没有编译器）。
@@ -937,7 +936,7 @@
     >```
     ></details>
 
->模板选择优先级：`render` > `template` > `el`挂载的DOM的HTML。
+>模板选择优先级：`render` > `template` > `el`挂载的DOM的HTML。若使用`render`或`template`，则挂载的节点会被完全替换（并非仅替换挂载节点的内部内容，而是直接把挂载节点整个替换），无论是`el`还是`vm.$mount(节点)`。`el`挂载的DOM的HTML 自然就没有替换逻辑。
 
 9. `renderError`（`(createElement: () => VNode, error: Error) => VNode`）：当`render`遭遇错误时，提供另外一种渲染输出
 
